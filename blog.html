@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog - Yashdeep Prasad">
+    <title>Blog - Yashdeep Prasad</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Blog-specific styles */
+        .blog-header {
+            margin-bottom: 2rem;
+        }
+
+        .blog-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-header p {
+            color: var(--color-text-light);
+        }
+
+        .blog-nav {
+            margin-bottom: 2rem;
+        }
+
+        .blog-nav a {
+            font-size: var(--font-size-small);
+        }
+
+        .blog-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .blog-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .blog-item:last-child {
+            border-bottom: none;
+        }
+
+        .blog-item-date {
+            font-size: var(--font-size-small);
+            color: var(--color-text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .blog-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-item-title a {
+            color: var(--color-text);
+        }
+
+        .blog-item-title a:hover {
+            color: var(--color-link);
+        }
+
+        .blog-item-excerpt {
+            font-size: var(--font-size-base);
+            color: var(--color-text-light);
+            margin: 0;
+        }
+
+        .blog-item-image {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background-color: #fff;
+        }
+
+        .blog-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--color-text-light);
+        }
+
+        .empty-state p {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <nav class="blog-nav">
+            <a href="index.html">&larr; Back to Home</a>
+        </nav>
+
+        <header class="blog-header">
+            <h1>Blog</h1>
+            <p>Thoughts on AI, machine learning, and research.</p>
+        </header>
+
+        <main>
+            <ul class="blog-list">
+                <li class="blog-item">
+                    <a href="https://medium.com/@yashdeep18121/what-advancements-would-it-take-for-ai-large-language-models-to-become-gpts-78cc4b0d5722" target="_blank" rel="noopener">
+                        <img src="assets/blog_gpt.png" alt="Conceptualizing AI as a General Purpose Technology" class="blog-item-image">
+                    </a>
+                    <p class="blog-item-date">Medium</p>
+                    <h2 class="blog-item-title">
+                        <a href="https://medium.com/@yashdeep18121/what-advancements-would-it-take-for-ai-large-language-models-to-become-gpts-78cc4b0d5722" target="_blank" rel="noopener">What Advancements Would It Take for AI Large Language Models to Become GPTs?</a>
+                    </h2>
+                    <p class="blog-item-excerpt">
+                        Exploring the technological breakthroughs and research directions needed for large language models to evolve into truly general-purpose transformers.
+                    </p>
+                </li>
+            </ul>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Yashdeep Prasad</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,491 @@
+/* CSS Variables */
+:root {
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-link: #1772d0;
+    --color-link-hover: #f09228;
+    --color-bg: #fff;
+    --color-border: #ddd;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-size-base: 15px;
+    --font-size-small: 13px;
+    --font-size-large: 18px;
+    --max-width: 950px;
+    --sidebar-width: 250px;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 0.8rem 0;
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    gap: 3rem;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--color-border);
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--color-text);
+}
+
+.title {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    margin-bottom: 0.2rem;
+}
+
+.affiliation {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin-bottom: 0.2rem;
+}
+
+.contact {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.contact p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.email {
+    font-size: var(--font-size-small);
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    padding: 0.2rem;
+    cursor: pointer;
+    color: var(--color-text-light);
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.copy-btn:hover {
+    color: var(--color-link);
+}
+
+.links {
+    text-align: center;
+    font-size: var(--font-size-small);
+    margin-bottom: 1.5rem;
+}
+
+.links a {
+    font-weight: 500;
+}
+
+.separator {
+    color: var(--color-text-light);
+    margin: 0 0.3rem;
+}
+
+.nav-links {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.nav-links a {
+    font-weight: 500;
+    font-size: var(--font-size-base);
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-text);
+}
+
+.interests {
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+}
+
+/* Research Items */
+.research-item {
+    margin-bottom: 1.5rem;
+}
+
+.research-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.research-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.research-role {
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+}
+
+.research-role::before {
+    content: "| ";
+}
+
+.research-date {
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+    margin-left: auto;
+}
+
+.research-desc {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Publications */
+.publication {
+    margin-bottom: 1.5rem;
+}
+
+.pub-title {
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.2rem;
+}
+
+.pub-authors {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin-bottom: 0.2rem;
+}
+
+.pub-venue {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin-bottom: 0.3rem;
+}
+
+.pub-links {
+    font-size: var(--font-size-small);
+    margin: 0;
+}
+
+.pub-links a {
+    margin-right: 0.8rem;
+}
+
+/* Experience */
+.experience-item {
+    margin-bottom: 1.5rem;
+}
+
+.exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.exp-company {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.exp-date {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+}
+
+.exp-role {
+    font-size: var(--font-size-small);
+    color: var(--color-link);
+    margin-bottom: 0.3rem;
+}
+
+.exp-desc {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Teaching */
+.teaching-item {
+    margin-bottom: 1.5rem;
+}
+
+.teaching-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.teaching-course {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.teaching-date {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+}
+
+.teaching-details {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin: 0.3rem 0 0 0;
+}
+
+/* Awards */
+.awards-list {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+}
+
+.awards-list li {
+    margin-bottom: 0.3rem;
+}
+
+/* News */
+.news-list {
+    list-style: none;
+    padding: 0;
+}
+
+.news-list li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: var(--font-size-small);
+}
+
+.news-date {
+    font-weight: 600;
+    color: var(--color-link);
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+.news-text {
+    color: var(--color-text-light);
+}
+
+/* Projects */
+.project-item {
+    margin-bottom: 1.5rem;
+}
+
+.project-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.project-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.project-link {
+    font-size: var(--font-size-small);
+}
+
+.project-desc {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Footer */
+footer {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+        gap: 2rem;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 1.5rem;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .research-header,
+    .exp-header,
+    .teaching-header {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .research-date,
+    .exp-date,
+    .teaching-date {
+        margin-left: 0;
+    }
+
+    .research-role::before {
+        content: "";
+    }
+
+    .news-list li {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .news-date {
+        min-width: auto;
+    }
+
+    .project-header {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .name {
+        font-size: 1.3rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar {
+        position: static;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    a {
+        color: var(--color-text);
+    }
+
+    .copy-btn {
+        display: none;
+    }
+}
