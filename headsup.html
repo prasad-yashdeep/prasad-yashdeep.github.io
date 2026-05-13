@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Celebrity Heads Up!</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { touch-action: manipulation; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.container {
+  text-align: center;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+  background: linear-gradient(90deg, #f7971e, #ffd200);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.subtitle {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 2.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.card:active { transform: scale(0.97); }
+.celebrity-name {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+}
+.celebrity-name.hidden-name {
+  font-size: 1.1rem;
+  color: #888;
+  font-weight: 400;
+}
+.timer-container { margin-bottom: 1.5rem; }
+.timer {
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #00d2ff;
+  text-shadow: 0 0 20px rgba(0,210,255,0.3);
+}
+.timer.warning { color: #ff6b6b; text-shadow: 0 0 20px rgba(255,107,107,0.4); animation: pulse 0.5s infinite; }
+.timer-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  margin-top: 0.8rem;
+  overflow: hidden;
+}
+.timer-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #00d2ff, #f7971e);
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button:active { transform: scale(0.93); }
+.btn-next {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #1a1a2e;
+  flex: 1;
+  max-width: 200px;
+}
+.btn-reset {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.score {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #aaa;
+}
+.score span { color: #ffd200; font-weight: 700; font-size: 1.4rem; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+@keyframes slideIn { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+.celebrity-name.animate { animation: slideIn 0.25s ease; }
+.timesup { color: #ff6b6b; font-size: 1.8rem !important; font-weight: 700 !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🌟 Celebrity Heads Up!</h1>
+  <p class="subtitle">Tap the card or Next to reveal • Describe without saying the name!</p>
+  
+  <div class="timer-container">
+    <div class="timer" id="timer">60</div>
+    <div class="timer-bar"><div class="timer-bar-fill" id="timerBar"></div></div>
+  </div>
+  
+  <div class="card" id="card">
+    <div class="celebrity-name hidden-name" id="celeb">Tap to start! 👆</div>
+  </div>
+  
+  <div class="controls">
+    <button class="btn-next" id="btnNext">Next ➡️</button>
+    <button class="btn-reset" id="btnReset">Reset 🔄</button>
+  </div>
+  
+  <div class="score">Score: <span id="score">0</span></div>
+</div>
+
+<script>
+const celebrities = [
+  "Taylor Swift","Leonardo DiCaprio","Beyoncé","Elon Musk",
+  "Dwayne Johnson","Rihanna","Tom Cruise","Oprah Winfrey",
+  "Drake","Kim Kardashian","Brad Pitt","Ariana Grande",
+  "Will Smith","Zendaya","Chris Hemsworth","Lady Gaga",
+  "Ryan Reynolds","Selena Gomez","Morgan Freeman","Billie Eilish",
+  "Robert Downey Jr.","Shakira","Keanu Reeves","Jennifer Lawrence",
+  "Post Malone","Timothée Chalamet","Margot Robbie","Bad Bunny",
+  "Scarlett Johansson","Travis Scott","Emma Watson","The Weeknd",
+  "Gal Gadot","Jack Black","Cardi B","Tom Holland",
+  "Adele","Cristiano Ronaldo","Lionel Messi","Virat Kohli",
+  "Shah Rukh Khan","Priyanka Chopra","BTS Jungkook","Doja Cat",
+  "Pedro Pascal","Sydney Sweeney","Ice Spice","MrBeast",
+  "Gordon Ramsay","Snoop Dogg","Harry Styles","Nicki Minaj",
+  "Chris Pratt","Millie Bobby Brown","Jason Momoa","Dua Lipa",
+  "LeBron James","Kylie Jenner","Johnny Depp","Anne Hathaway"
+];
+
+let shuffled, index, score, timeLeft, timerInterval, gameStarted, gameOver;
+
+function init() {
+  shuffled = [...celebrities].sort(() => Math.random() - 0.5);
+  index = 0; score = 0; timeLeft = 60;
+  timerInterval = null; gameStarted = false; gameOver = false;
+  document.getElementById('timer').textContent = '60';
+  document.getElementById('timer').classList.remove('warning');
+  document.getElementById('timerBar').style.width = '100%';
+  document.getElementById('score').textContent = '0';
+  var el = document.getElementById('celeb');
+  el.textContent = 'Tap to start! 👆';
+  el.className = 'celebrity-name hidden-name';
+}
+
+function startTimer() {
+  if (timerInterval) return;
+  gameStarted = true;
+  timerInterval = setInterval(function() {
+    timeLeft--;
+    document.getElementById('timer').textContent = timeLeft;
+    document.getElementById('timerBar').style.width = ((timeLeft/60)*100) + '%';
+    if (timeLeft <= 10) document.getElementById('timer').classList.add('warning');
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      gameOver = true;
+      var el = document.getElementById('celeb');
+      el.textContent = "⏰ Time's up! Score: " + score;
+      el.className = 'celebrity-name timesup';
+    }
+  }, 1000);
+}
+
+function revealNext() {
+  if (gameOver) return;
+  if (!gameStarted) startTimer();
+  if (gameStarted && index > 0) {
+    score++;
+    document.getElementById('score').textContent = score;
+  }
+  if (index >= shuffled.length) {
+    shuffled = [...celebrities].sort(() => Math.random() - 0.5);
+    index = 0;
+  }
+  var el = document.getElementById('celeb');
+  el.textContent = shuffled[index];
+  el.className = 'celebrity-name animate';
+  setTimeout(function() { el.classList.remove('animate'); }, 250);
+  index++;
+}
+
+function resetGame() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  init();
+}
+
+// Event listeners — works on both mobile and desktop
+document.getElementById('card').addEventListener('click', revealNext);
+document.getElementById('btnNext').addEventListener('click', revealNext);
+document.getElementById('btnReset').addEventListener('click', resetGame);
+
+init();
+</script>
+</body>
+</html>
