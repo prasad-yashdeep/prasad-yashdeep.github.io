@@ -152,28 +152,89 @@ button:active { transform: scale(0.93); }
 
 <script>
 const celebrities = [
-  "Taylor Swift","Leonardo DiCaprio","Beyoncé","Elon Musk",
-  "Dwayne Johnson","Rihanna","Tom Cruise","Oprah Winfrey",
-  "Drake","Kim Kardashian","Brad Pitt","Ariana Grande",
-  "Will Smith","Zendaya","Chris Hemsworth","Lady Gaga",
-  "Ryan Reynolds","Selena Gomez","Morgan Freeman","Billie Eilish",
-  "Robert Downey Jr.","Shakira","Keanu Reeves","Jennifer Lawrence",
-  "Post Malone","Timothée Chalamet","Margot Robbie","Bad Bunny",
-  "Scarlett Johansson","Travis Scott","Emma Watson","The Weeknd",
-  "Gal Gadot","Jack Black","Cardi B","Tom Holland",
-  "Adele","Cristiano Ronaldo","Lionel Messi","Virat Kohli",
-  "Shah Rukh Khan","Priyanka Chopra","BTS Jungkook","Doja Cat",
-  "Pedro Pascal","Sydney Sweeney","Ice Spice","MrBeast",
-  "Gordon Ramsay","Snoop Dogg","Harry Styles","Nicki Minaj",
-  "Chris Pratt","Millie Bobby Brown","Jason Momoa","Dua Lipa",
-  "LeBron James","Kylie Jenner","Johnny Depp","Anne Hathaway"
+  // Actors
+  "Leonardo DiCaprio","Tom Cruise","Brad Pitt","Johnny Depp","Will Smith",
+  "Robert Downey Jr.","Keanu Reeves","Morgan Freeman","Denzel Washington","Tom Hanks",
+  "Ryan Reynolds","Chris Hemsworth","Chris Pratt","Chris Evans","Dwayne Johnson",
+  "Vin Diesel","Jason Momoa","Zac Efron","Ryan Gosling","Jake Gyllenhaal",
+  "Matt Damon","Ben Affleck","Hugh Jackman","Daniel Craig","Joaquin Phoenix",
+  "Adam Sandler","Jim Carrey","Eddie Murphy","Samuel L. Jackson","Al Pacino",
+  "Robert De Niro","Jack Nicholson","Tom Holland","Timothée Chalamet","Pedro Pascal",
+  "Oscar Isaac","Idris Elba","Michael B. Jordan","Chadwick Boseman","Benedict Cumberbatch",
+  // Actresses
+  "Scarlett Johansson","Jennifer Lawrence","Margot Robbie","Gal Gadot","Emma Watson",
+  "Anne Hathaway","Natalie Portman","Angelina Jolie","Sandra Bullock","Julia Roberts",
+  "Meryl Streep","Cate Blanchett","Nicole Kidman","Charlize Theron","Halle Berry",
+  "Zendaya","Sydney Sweeney","Florence Pugh","Ana de Armas","Millie Bobby Brown",
+  "Emma Stone","Saoirse Ronan","Lupita Nyong'o","Viola Davis","Reese Witherspoon",
+  // Musicians
+  "Taylor Swift","Beyoncé","Rihanna","Ariana Grande","Lady Gaga",
+  "Billie Eilish","Dua Lipa","Selena Gomez","Shakira","Adele",
+  "Nicki Minaj","Cardi B","Doja Cat","SZA","Olivia Rodrigo",
+  "Drake","The Weeknd","Post Malone","Travis Scott","Bad Bunny",
+  "Kanye West","Jay-Z","Eminem","Snoop Dogg","Kendrick Lamar",
+  "Ed Sheeran","Harry Styles","Justin Bieber","Bruno Mars","Lil Nas X",
+  "Ice Spice","Megan Thee Stallion","21 Savage","Future","Metro Boomin",
+  "Frank Ocean","Tyler the Creator","Mac Miller","Juice WRLD","XXXTentacion",
+  "Lana Del Rey","Miley Cyrus","Katy Perry","Pink","Lizzo",
+  // Sports
+  "Cristiano Ronaldo","Lionel Messi","Neymar","Kylian Mbappé","LeBron James",
+  "Stephen Curry","Michael Jordan","Kobe Bryant","Shaquille O'Neal","Kevin Durant",
+  "Virat Kohli","MS Dhoni","Sachin Tendulkar","Roger Federer","Rafael Nadal",
+  "Novak Djokovic","Serena Williams","Usain Bolt","Conor McGregor","Mike Tyson",
+  "Tom Brady","Floyd Mayweather","Tiger Woods","Lewis Hamilton","Max Verstappen",
+  // TV / Streaming
+  "Kim Kardashian","Kylie Jenner","Oprah Winfrey","Ellen DeGeneres","Jimmy Fallon",
+  "Gordon Ramsay","Simon Cowell","Bear Grylls","David Attenborough","Steve Harvey",
+  "Kevin Hart","Dave Chappelle","Trevor Noah","John Oliver","Joe Rogan",
+  // Tech / Business
+  "Elon Musk","Jeff Bezos","Mark Zuckerberg","Bill Gates","Steve Jobs",
+  "Tim Cook","Jensen Huang","Sam Altman","MrBeast","PewDiePie",
+  // Bollywood / Indian
+  "Shah Rukh Khan","Salman Khan","Aamir Khan","Amitabh Bachchan","Ranveer Singh",
+  "Ranbir Kapoor","Hrithik Roshan","Akshay Kumar","Deepika Padukone","Priyanka Chopra",
+  "Alia Bhatt","Katrina Kaif","Kareena Kapoor","Aishwarya Rai","Anushka Sharma",
+  // K-Pop / Asian
+  "BTS Jungkook","BTS V","Blackpink Lisa","Blackpink Jennie","Jackie Chan",
+  // Historical / Iconic
+  "Michael Jackson","Elvis Presley","Marilyn Monroe","Princess Diana","Muhammad Ali",
+  "Bob Marley","Freddie Mercury","John Lennon","David Bowie","Whitney Houston",
+  "Tupac","Notorious B.I.G.","Prince","Amy Winehouse","Kurt Cobain",
+  // Miscellaneous
+  "Jack Black","Will Ferrell","Seth Rogen","Jonah Hill","Danny DeVito",
+  "Nicolas Cage","Keanu Reeves","Arnold Schwarzenegger","Sylvester Stallone","Bruce Lee",
+  "Chuck Norris","Dwayne 'The Rock' Johnson","John Cena","The Undertaker","Stone Cold Steve Austin"
 ];
 
-let shuffled, index, score, timeLeft, timerInterval, gameStarted, gameOver;
+// Fisher-Yates shuffle — guaranteed no repeats until entire list is used
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
+
+// Track used names across resets within same page session
+var used = new Set();
+var queue = [];
+
+function getNext() {
+  if (queue.length === 0) {
+    // If we've used everything, reset
+    if (used.size >= celebrities.length) used.clear();
+    var available = celebrities.filter(function(c) { return !used.has(c); });
+    queue = shuffle(available);
+  }
+  var name = queue.pop();
+  used.add(name);
+  return name;
+}
+
+var score, timeLeft, timerInterval, gameStarted, gameOver;
 
 function init() {
-  shuffled = [...celebrities].sort(() => Math.random() - 0.5);
-  index = 0; score = 0; timeLeft = 60;
+  score = 0; timeLeft = 60;
   timerInterval = null; gameStarted = false; gameOver = false;
   document.getElementById('timer').textContent = '60';
   document.getElementById('timer').classList.remove('warning');
@@ -206,19 +267,15 @@ function startTimer() {
 function revealNext() {
   if (gameOver) return;
   if (!gameStarted) startTimer();
-  if (gameStarted && index > 0) {
+  if (gameStarted && document.getElementById('celeb').className.indexOf('hidden-name') === -1 
+      && document.getElementById('celeb').textContent !== '') {
     score++;
     document.getElementById('score').textContent = score;
   }
-  if (index >= shuffled.length) {
-    shuffled = [...celebrities].sort(() => Math.random() - 0.5);
-    index = 0;
-  }
   var el = document.getElementById('celeb');
-  el.textContent = shuffled[index];
+  el.textContent = getNext();
   el.className = 'celebrity-name animate';
   setTimeout(function() { el.classList.remove('animate'); }, 250);
-  index++;
 }
 
 function resetGame() {
@@ -226,7 +283,6 @@ function resetGame() {
   init();
 }
 
-// Event listeners — works on both mobile and desktop
 document.getElementById('card').addEventListener('click', revealNext);
 document.getElementById('btnNext').addEventListener('click', revealNext);
 document.getElementById('btnReset').addEventListener('click', resetGame);
